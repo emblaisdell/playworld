@@ -20,6 +20,11 @@ app.get('/', function (req, response) {
 
 app.use('/webapp', express.static(path.join(__dirname + '/../public')));
 
+/**
+ * Saves a new user if username does not exist already
+ * 
+ * @return created user object
+ */
 app.post('/register', function (req, res) {
 	var name = req.body.name
 	var username = req.body.username
@@ -45,6 +50,11 @@ app.post('/register', function (req, res) {
 	})
 })
 
+/**
+ * Attempts to login user by verifying credentials
+ * 
+ * @return logged-in user
+ */
 app.post('/login', function (req, res) {
 	var username = req.body.username
 	var password = req.body.password
@@ -63,10 +73,16 @@ app.post('/login', function (req, res) {
 			return res.status(404).send('No user found')
 		}
 
-		return res.status(200).send('Login successful')
+		return res.status(200).send(user)
 	})
 })
 
+/**
+ * Gets publicly available user details for the username 
+ * provided
+ * 
+ * @return user containing publicly available data
+ */
 app.post('/user', function (req, res) {
 	var username = req.body.username
 	User.find({username: username}, function(err, user) {
@@ -78,7 +94,7 @@ app.post('/user', function (req, res) {
 	})
 })
 
-app.post('/user/loot', function (req, res) {
+app.post('/user/loots', function (req, res) {
   var username = req.body.username
   User.findOne({username: username}, 'loots', function(err, user) {
   	if (err) {
@@ -89,7 +105,7 @@ app.post('/user/loot', function (req, res) {
   })
 })
 
-app.post('/user/group', function (req, res) {
+app.post('/user/groups', function (req, res) {
   var username = req.body.username
   User.findOne({username: username}, 'groups', function(err, user) {
     if(err) {
@@ -109,6 +125,8 @@ app.post('/playgrounds', function(req, res) {
 		return res.status(200).send(playgrounds)
 	})
 })
+
+app.post('/')
 
 app.listen(3000, function () {
   console.log('App listening on port', 3000)

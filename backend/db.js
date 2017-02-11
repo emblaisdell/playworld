@@ -23,7 +23,8 @@ var userScheme = new Schema({
 	},
 	password: {
 		type: String,
-		required: true
+		required: true,
+		select: false
 	},
 	loots: [{
 		type: mongoose.Schema.Types.ObjectId,
@@ -50,6 +51,11 @@ var User = mongoose.model('User', userScheme)
 var lootScheme = new Schema({
 	type: {
 		type: String,
+		enum: [
+			'PATCH',
+			'BADGE',
+			'TROPHY'
+		],
 		required: true
 	},
 	text: String,
@@ -78,6 +84,7 @@ var gameScheme = new Schema({
 	modifier: String,
 	date: {
 		type: Date,
+		default: Date.now,
 		required: true
 	},
 	players: [{
@@ -85,7 +92,10 @@ var gameScheme = new Schema({
 		ref: 'User',
 		required: true
 	}],
-	winner: String
+	winner: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User'
+	}
 })
 
 var Game = mongoose.model('Game', gameScheme)
@@ -107,11 +117,7 @@ var playgroundScheme = new Schema({
 	longitude: {
 		type: Number,
 		required: true
-	},
-	equiptment: [{
-		type: String,
-		required: true
-	}]
+	}
 })
 
 var Playground = mongoose.model('Playground', playgroundScheme)
