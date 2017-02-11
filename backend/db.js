@@ -96,6 +96,10 @@ var playgroundScheme = new Schema({
 		type: String,
 		required: true
 	},
+	hubIP: {
+		type: Number,
+		required: true
+	},
 	latitude: {
 		type: Number,
 		required: true
