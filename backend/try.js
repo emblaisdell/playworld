@@ -7,5 +7,4 @@ const Loot = mongoose.model('Loot')
 const Group = mongoose.model('Group')
 
 
-
 mongoose.connection.close()

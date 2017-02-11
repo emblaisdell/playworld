@@ -2,9 +2,11 @@ var db = require('./db')
 
 var express = require('express')
 var mongoose = require('mongoose')
+var path = require('path')
+var parser = require('body-parser')
 
 var app = express()
-path = require('path');
+app.use(parser.urlencoded({extended: true}))
 
 const User = mongoose.model('User')
 const Loot = mongoose.model('Loot')
@@ -16,25 +18,30 @@ app.get('/', function (req, response) {
 
 app.use('/webapp', express.static(path.join(__dirname + '/../public')));
 
-app.post('/register', function (req, response) {
+app.post('/register', function (req, res) {
+	var name = req.body.name
+	var username = req.body.username
+	var password = req.body.password
+
 	var newUser = new User({
-		name: req.body.name,
-		username: req.body.username,
-		password: req.body.password,
+		name: name,
+		username: username,
+		password: password,
 	})
 
-	if (!(newUser.name && newUser.username && newUser.password)) {
-		response.send('Invalid parameter(s)', 400)
+	if (!(name && username && password)) {
+		res.status(400).send('Invalid parameter(s)')
 		return
 	}
 
 	newUser.save(function(err) {
 		if (err) {
-			response.send('Username {0} exists'.format(req.body.username), 400)
+			res.status(400).send('Username already exists')
 			return
 		}
 
-		console.log('User {0} created'.format(req.body.username))
+		console.log('New user created')
+		res.status(200).send(newUser)
 	})
 })
 
