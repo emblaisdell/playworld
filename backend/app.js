@@ -98,6 +98,16 @@ app.post('/user/group', function (req, res) {
   })
 })
 
+app.post('/playgrounds', function(req, res) {
+	User.find({}, function(err, playgrounds) {
+		if (err) {
+			return res.status(400).send(err)
+		}
+
+		return res.status(200).send(playgrounds)
+	})
+})
+
 app.listen(3000, function () {
   console.log('App listening on port', 3000)
 })
