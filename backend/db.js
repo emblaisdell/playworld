@@ -9,6 +9,7 @@ conn.once('open', console.log.bind(console, 'connection successful'))
 
 var Schema = mongoose.Schema
 
+// User Schema
 var userScheme = new Schema({
 	name: {
 		type: String,
@@ -27,11 +28,16 @@ var userScheme = new Schema({
 	loots: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Loot'
-	}]
+	}],
+	group: {
+		type: mongoose.Schema.Types.Object.Id,
+		ref: 'Group'
+	}
 })
 
 var User = mongoose.model('User', userScheme)
 
+// Loot Schema
 var lootScheme = new Schema({
 	type: {
 		type: String,
@@ -43,5 +49,15 @@ var lootScheme = new Schema({
 })
 
 var Loot = mongoose.model('Loot', lootScheme)
+
+// Group Schema
+var groupScheme = new Schema({
+	members: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User'
+	}]
+})
+
+var Group = mongoose.model('Group', groupScheme)
 
 module.exports = User

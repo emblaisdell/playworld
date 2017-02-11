@@ -7,7 +7,6 @@ var app = express()
 path = require('path');
 
 const User = mongoose.model('User')
-const Loot = mongoose.model('Loot')
 
 app.get('/', function (req, response) {
   response.send('Hello, world!')
@@ -36,6 +35,24 @@ app.post('/register', function (req, response) {
 		console.log('User {0} created'.format(req.body.username))
 	})
 })
+
+app.post('/user/loot', function (req, response)) {
+  User.findOne({username: req.body.username}, 'loots', function(err, user){
+    if(err) {
+      res.send('Error fetching loot. ',400)
+    }
+    res.send(user);
+  })
+}
+
+app.psot('/user/group', function(req, response)) {
+  User.findOne({username: req.doby.username}, 'group', function(err, user) {
+    if(err) {
+      res.send('Error finding group. ', 400)
+    }
+    res.send(user);
+  })
+}
 
 app.listen(3000, function () {
   console.log('App listening on port', 3000)
