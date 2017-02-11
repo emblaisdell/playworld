@@ -33,15 +33,99 @@ app.post('/gameStart',function(req,res){
 function Game(type,players){
 	this.type = type;
 	this.players = players;
-	this.groups = [];
+	this.groups = [{
+		members:this.players,
+		actionNum:0
+	}];
 	this.winners = [];
+	this.actions = [];
+	this.initActions();
 }
-Game.prototype.update = function(event,player){
-	
+Game.prototype.initActions = function(){
+	this.actions.forEach(function(action,i){
+		switch(action.type){
+			case "win":
+				action.winners = 0;
+				break;
+			case "waitFor":
+				action.completedBy = [];
+				break;
+		}
+	})
+}
+Game.prototype.sensorInput = function(event,player){
+	groups.forEach(function(group,i){
+		if(this.actions[group.actionNum] == event){
+			if(group.members.indexOf(player)!=-1){
+				if()
+			}
+		}
+	})
+}
+Game.prototype.getHardware = function(given){
+	if(given.substring(0,1)=="#"){
+		return config.setup[this.type];
+	}
+	return given;
+}
+Game.prototype.nextAction = function(group){
+	group.actionNum++;
+	if(group.actionNum>=this.actions.length){
+		Game.end();
+		return;
+	}
+	var action = this.actions[group.actionNum];
+	switch(){
+		case "win":
+			if(!actions.first || action.winners==0){
+				this.winners = this.winners.concat(group.members).unique();
+				action.winners++;
+			}
+			break;
+		case "regroup":
+			if(action.groupBy=="team"){
+				this.groups = [{
+					members:this.players,
+					actionNum:group.actionNum
+				}];
+			}else{
+				this.groups = [];
+				this.players.forEach(function (player,i){
+					groups.push({
+						members:[player],
+						actionNum:group.actionNum
+					})
+				})
+			}
+			groups.forEach(function(newGroup,i){
+				this.nextAction(newGroup)
+			})
+			return;
+		case "waitfor":
+			return;
+		case "do":
+			var to;
+			if(action.where = "everywhere"){
+				to = config.hardware;
+			}
+			else{
+				to = action.where.split(",");
+			}
+			for(var i=0; i<to.length; i++){
+				to[i] = getHardware(to[i]);
+				request.post({
+					to[i]+"/"+action.what,
+					data:data,
+					function(){}
+				})
+			}
+			break;
+	}
+	this.nextAction(group)
 }
 Game.prototype.end = function(){
 	request.post(
-		config.serverURL,
+		config.serverURL+"/game/end",
 		{
 			type:this.type,
 			winners:this.winners,
@@ -58,3 +142,16 @@ Game.prototype.end = function(){
 app.listen(3030, function () {
   console.log('App listening on port', 3030)
 })
+
+
+Array.prototype.unique = function() {
+    var a = this.concat();
+    for(var i=0; i<a.length; ++i) {
+        for(var j=i+1; j<a.length; ++j) {
+            if(a[i] === a[j])
+                a.splice(j--, 1);
+        }
+    }
+
+    return a;
+};

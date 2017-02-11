@@ -1,5 +1,9 @@
 {
 	"serverURL":"localhost:3000",
+	"hardware":[
+		"12.34.56.78",
+		"86.75.30.9"
+	],
 	"setup":{
 		"race":{
 			"#start":"12.34.56.78",
