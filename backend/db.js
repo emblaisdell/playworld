@@ -32,13 +32,13 @@ var userScheme = new Schema({
 	groups: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Group'
-	}
+	}],
 	personalBest: {
 		game: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Game'
+			ref: 'Game',
 			required: true
-		}
+		},
 		date: Date,
 		value: Number
 	}
@@ -70,24 +70,46 @@ var groupScheme = new Schema({
 var Group = mongoose.model('Group', groupScheme)
 
 // Game Schema
-var gameScheme = newSchema({
+var gameScheme = new Schema({
 	type: {
 		type: String,
 		required: true
-	}
-	midifier: String,
+	},
+	modifier: String,
 	date: {
 		type: Date,
 		required: true
-	}
+	},
 	players: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',
 		required: true
-	}]
+	}],
 	winner: String
 })
 
 var Game = mongoose.model('Game', gameScheme)
+
+// Playground Schema
+var playgroundScheme = new Schema({
+	name: {
+		type: String,
+		required: true
+	},
+	latitude: {
+		type: Number,
+		required: true
+	},
+	longitude: {
+		type: Number,
+		required: true
+	},
+	equiptment: [{
+		type: String,
+		required: true
+	}]
+})
+
+var Playground = mongoose.model('Playground', playgroundScheme)
 
 module.exports = User
