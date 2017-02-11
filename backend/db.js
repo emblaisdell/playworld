@@ -82,20 +82,35 @@ var gameScheme = new Schema({
 		required: true
 	},
 	modifier: String,
-	date: {
+	started_at: {
 		type: Date,
 		default: Date.now,
 		required: true
 	},
+	playground: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Playground'
+	}
 	players: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',
 		required: true
 	}],
-	winner: {
+	winners: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
+	}]
+	is_complete: {
+		type: Boolean,
+		required: true
 	}
+})
+
+userScheme.pre('save', function(next) {
+	this.started_at = new Date()
+	this.is_complete = false
+
+	next()
 })
 
 var Game = mongoose.model('Game', gameScheme)
