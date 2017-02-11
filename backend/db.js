@@ -10,15 +10,18 @@ conn.once('open', console.log.bind(console, 'connection successful'))
 var Schema = mongoose.Schema
 
 var userScheme = new Schema({
-	name: String,
+	name: {
+		type: String,
+		required: true,
+	},
 	username: {
 		type: String,
 		required: true,
-		unique: true
+		unique: true,
 	},
 	password: {
 		type: String,
-		required: true
+		required: true,
 	},
 })
 
