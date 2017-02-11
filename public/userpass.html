@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Playworld</title>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="stylesheet.css">
+	<script src="scripts.js"></script>
+	<script>
+		var signup;
+		setCookie("username","",0.0000001);
+		setCookie("password","",0.0000001);
+		$(function(){
+			$("#login").click(function(){
+				setCookie("name",$("#name").val(),7);
+				setCookie("username",$("#username").val(),7);
+				setCookie("password",$("#password").val(),7);
+				console.log("cookie set");
+				if(signup){
+					$.ajax({
+						url:"../register",
+						method:"post",
+						data:{
+							name:getCookie("name"),
+							username:getCookie("username"),
+							password:getCookie("password")
+						},
+						success:function(data){
+							alert(data);
+							if(data == "Account Created Successfully"){
+								window.location.href = "index.html";
+							}
+						},
+						error:function(err,msg){
+							console.log(msg)
+						}
+					});
+				}
+				else{
+					/*$.ajax({
+						url:"testcred",
+						method:"post",
+						data:{
+							username:getCookie("username"),
+							password:getCookie("password")
+						},
+						success:function(data){
+							if(data == "Valid Credentials"){
+								window.location.href = "index.html";
+							}
+							else{
+								alert(data);
+							}
+						}
+					});*/
+				}
+				//window.location.href = "index.html";
+			});
+			urlParams = parseURLParams(window.location.href);
+			signup = false;
+			if(urlParams){if(urlParams.hasOwnProperty("signup")){
+				signup = true;
+			}}
+			if(signup){
+				$("#login").text("Sign Up");
+				$("#signup").css("display","none");
+			}
+			else{
+				$("#passwordWarning").css("display","none");
+			}
+		});
+	</script>
+</head>
+
+<body>
+	<div class="container">
+		<div class="page-header">
+			<h1>Playworld</h1>
+		</div>
+		<p><input id="name" type="text" class="form-control" placeholder="First Name" /></p>
+		<p><input id="username" type="text" class="form-control" placeholder="User Name" /></p>
+		<p><input id="password" type="password" class="form-control" placeholder="Password" /></p>
+		<div id="login" class="btn btn-default">Login</div>
+		<br/><br/>
+		<p id="signup">New to Playworld?  <a href="userpass.html?signup">Sign Up!</a></p>
+	</div>
+</body>
+
+</html>
