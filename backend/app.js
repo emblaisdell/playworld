@@ -54,8 +54,7 @@ app.post('/login', function (req, res) {
 
 	User.findOne(credentials, function (err, user) {
 		if (err) {
-			console.log(err)
-			return res.status(500).send('')
+			return res.status(400).send(err)
 		}
 
 		if (!user) {
@@ -66,14 +65,25 @@ app.post('/login', function (req, res) {
 	})
 })
 
+app.post('/user', function (req, res) {
+	var username = req.body.username
+	User.find({username: username}, function(err, user) {
+		if (err) {
+			return res.status(400).send(err)
+		}
+
+		return res.status(200).send(user)
+	})
+})
+
 app.post('/user/loot', function (req, res) {
   var username = req.body.username
   User.findOne({username: username}, 'loots', function(err, user) {
-  	if(err) {
-      res.status(400).send('Could not fetch loots for ' + username)
+  	if (err) {
+      return res.status(400).send(err)
     }
 
-    res.status(200).send(user);
+    return res.status(200).send(user)
   })
 })
 
@@ -81,10 +91,10 @@ app.post('/user/group', function (req, res) {
   var username = req.body.username
   User.findOne({username: username}, 'groups', function(err, user) {
     if(err) {
-      return res.status(400).send('Could not fetch groups for ' + username)
+      return res.status(400).send(err)
     }
 
-    return res.status(200).send(user);
+    return res.status(200).send(user)
   })
 })
 
