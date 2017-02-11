@@ -7,6 +7,7 @@ var app = express()
 path = require('path');
 
 const User = mongoose.model('User')
+const Loot = mongoose.model('Loot')
 
 app.get('/', function (req, response) {
   response.send('Hello, world!')

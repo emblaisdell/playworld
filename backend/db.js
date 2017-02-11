@@ -12,26 +12,33 @@ var Schema = mongoose.Schema
 var userScheme = new Schema({
 	name: {
 		type: String,
-		required: true,
+		required: true
 	},
 	username: {
 		type: String,
 		required: true,
 		unique: true,
+		lowercase: true
 	},
 	password: {
 		type: String,
-		required: true,
+		required: true
 	},
-	loot: [String]
+	loots: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Loot'
+	}]
 })
 
 var User = mongoose.model('User', userScheme)
 
 var lootScheme = new Schema({
-	type: String,
+	type: {
+		type: String,
+		required: true
+	},
 	text: String,
-	primColor: String,
+	primaryColor: String,
 	secColor: String
 })
 
