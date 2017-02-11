@@ -31,40 +31,61 @@ app.post('/register', function (req, res) {
 	})
 
 	if (!(name && username && password)) {
-		res.status(400).send('Invalid parameter(s)')
-		return
+		return res.status(400).send('Invalid parameter(s)')
 	}
 
 	newUser.save(function(err) {
 		if (err) {
-			res.status(400).send('Username already exists')
-			return
+			return res.status(500).send('Username already exists')
 		}
 
 		console.log('New user created')
-		res.status(200).send(newUser)
+		return res.status(200).send(newUser)
 	})
 })
 
-app.post('/user/loot', function (req, response) {
+app.post('/login', function (req, res) {
+	var username = req.body.username
+	var password = req.body.password
+
+	var credentials = {
+		username: username,
+		password: password
+	}
+
+	User.findOne(credentials, function (err, user) {
+		if (err) {
+			console.log(err)
+			return res.status(500).send('')
+		}
+
+		if (!user) {
+			return res.status(404).send('No user found')
+		}
+
+		return res.status(200).send('Login successful')
+	})
+})
+
+app.post('/user/loot', function (req, res) {
   var username = req.body.username
-  User.findOne({username: username}, 'loots', function(err, user){
-    if(err) {
-      res.status(400).send('Error fetching loot for {0}'.format(username))
+  User.findOne({username: username}, 'loots', function(err, user) {
+  	if(err) {
+      res.status(400).send('Could not fetch loots for ' + username)
     }
 
     res.status(200).send(user);
   })
 })
 
-app.post('/user/group', function(req, response) {
+app.post('/user/group', function (req, res) {
   var username = req.body.username
-  User.findOne({username: username}, 'group', function(err, user) {
+  User.findOne({username: username}, 'groups', function(err, user) {
     if(err) {
-      res.status(400).send('Error finding group for {0}'.format(username))
+      return res.status(400).send('Could not fetch groups for ' + username)
     }
 
-    res.status(200).send(user);
+    return res.status(200).send(user);
   })
 })
 

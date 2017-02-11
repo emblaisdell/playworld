@@ -29,7 +29,7 @@ var userScheme = new Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Loot'
 	}],
-	group: {
+	groups: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Group'
 	}
