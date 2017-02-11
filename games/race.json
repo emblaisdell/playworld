@@ -1,2 +1,9 @@
-{
-}
+[
+	{
+		type:"regroup",
+		groupBy:"team"
+	},
+	{
+		
+	}
+]

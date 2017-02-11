@@ -14,6 +14,22 @@
 </head>
 
 <body>
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">Playworld</a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li><a href="index.html">Dashboard</a></li>
+			<li><a href="loot.html">Loot</a></li>
+			<li class="active"><a href="playgrounds.html">Playgrounds Near You</a></li>
+		</ul>
+		<!--ul class="nav navbar-nav navbar-right">
+			<li><a href="#">Sign Up</a></li>
+			<li><a href="#">Sign In</a></li>
+		</ul-->
+	</div>
+</nav>
 <div class="container">
 	<h2 class="page-header">Find a Playground Near You</h2>
 	<div id="map"></div>
@@ -24,7 +40,7 @@ function initMap() {
 	// Create a map object and specify the DOM element for display.
 	map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat:40.964529, lng:-76.88441},
-		zoom: 8
+		zoom: 14
 	});
 }
 $(function(){

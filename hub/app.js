@@ -57,7 +57,9 @@ Game.prototype.sensorInput = function(event,player){
 	groups.forEach(function(group,i){
 		if(this.actions[group.actionNum] == event){
 			if(group.members.indexOf(player)!=-1){
-				if()
+				if(false){
+					//TODO finish sensor response
+				}
 			}
 		}
 	})
@@ -75,7 +77,7 @@ Game.prototype.nextAction = function(group){
 		return;
 	}
 	var action = this.actions[group.actionNum];
-	switch(){
+	switch(action.type){
 		case "win":
 			if(!actions.first || action.winners==0){
 				this.winners = this.winners.concat(group.members).unique();
@@ -113,11 +115,11 @@ Game.prototype.nextAction = function(group){
 			}
 			for(var i=0; i<to.length; i++){
 				to[i] = getHardware(to[i]);
-				request.post({
+				request.post(
 					to[i]+"/"+action.what,
-					data:data,
+					data,
 					function(){}
-				})
+				)
 			}
 			break;
 	}
