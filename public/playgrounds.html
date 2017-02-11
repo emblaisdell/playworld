@@ -16,6 +16,44 @@
 <body>
 <div class="container">
 	<h2 class="page-header">Find a Playground Near You</h2>
+	<div id="map"></div>
+<script>
+var map;
+
+function initMap() {
+	// Create a map object and specify the DOM element for display.
+	map = new google.maps.Map(document.getElementById('map'), {
+		center: {lat:40.964529, lng:-76.88441},
+		zoom: 8
+	});
+}
+$(function(){
+	$.ajax({
+		url:"../playgrounds",
+		method:"post",
+		data:{},
+		success:function(data){
+			data.forEach(function(playground,i){
+			new google.maps.Marker({
+					position: {
+						lat:playground.latitude,
+						lng:playground.longitude
+					},
+					map: map
+				});
+			})
+			console.log(data)
+		},
+		error:function(err,data){
+			alert(err.responseText)
+			console.log(err)
+			console.log(data)
+		}
+	})
+})
+</script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyA3ulkS0ZUnFrKHZVmXM32xahzR9zf6TlE&callback=initMap"></script>
+
 </div>
 </body>
 

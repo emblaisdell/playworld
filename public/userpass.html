@@ -17,7 +17,7 @@
 				setCookie("name",$("#name").val(),7);
 				setCookie("username",$("#username").val(),7);
 				setCookie("password",$("#password").val(),7);
-				console.log("cookie set");
+				console.log(getCookie("name"));
 				if(signup){
 					$.ajax({
 						url:"../register",
@@ -29,11 +29,11 @@
 						},
 						success:function(data){
 							alert(data);
-							if(data == "Account Created Successfully"){
-								window.location.href = "index.html";
-							}
+							window.location.href = "index.html";
 						},
 						error:function(err,msg){
+							alert(err.responseText)
+							console.log(err)
 							console.log(msg)
 						}
 					});
