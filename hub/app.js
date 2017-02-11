@@ -9,36 +9,61 @@ app.use(parser.urlencoded({extended: true}))
 
 config = JSON.parse(fs.readFileSync("config.json"));
 
+console.log(config)
+
 games = []
 
 app.get('/', function (req, response) {
   response.send('Hub Active')
 })
 
-app.post('/gameStart',function(req,res){
+app.post('/game/start',function(req,res){
 	var gameType = req.body.type;
 	var players = req.body.players;
 	if(!gameType){
 		res.status(400).send('No game type selected')
+		return
 	}
 	if(!players){
 		res.status(400).send('No valid players')
+		return
 	}
 	if(!config.setup.hasOwnProperty(gameType)){
 		res.status(400).send("Game type not supported at this location")
+		return;
 	}
+	res.send("Success")
 	games.push(new Game(gameType,players))
+	console.log("Success")
 })
 
 function Game(type,players){
+	console.log("New Game")
 	this.type = type;
 	this.players = players;
 	this.groups = [{
 		members:this.players,
-		actionNum:0
+		actionNum:-1
 	}];
 	this.winners = [];
 	this.actions = [];
+	console.log(config.serverURL+"/game/actions");
+	request.post(
+		config.serverURL+"/game/actions",
+		{
+			filename:this.type
+		},
+		function (error, response, body) {
+			if (!error && response.statusCode == 200) {
+				console.log(body)
+			}
+			else{
+				console.log("Error")
+				console.log(response)
+				console.log(body)
+			}
+		}
+	)
 	this.initActions();
 }
 Game.prototype.initActions = function(){
