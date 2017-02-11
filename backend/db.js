@@ -33,16 +33,7 @@ var userScheme = new Schema({
 	groups: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Group'
-	}],
-	personalBest: {
-		game: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Game',
-			required: true
-		},
-		date: Date,
-		value: Number
-	}
+	}]
 })
 
 var User = mongoose.model('User', userScheme)
@@ -59,8 +50,8 @@ var lootScheme = new Schema({
 		required: true
 	},
 	text: String,
-	primaryColor: String,
-	secColor: String
+	primary_color: String,
+	sec_color: String
 })
 
 var Loot = mongoose.model('Loot', lootScheme)
@@ -121,8 +112,8 @@ var playgroundScheme = new Schema({
 		type: String,
 		required: true
 	},
-	hubIP: {
-		type: Number,
+	hub_ip: {
+		type: String,
 		required: true
 	},
 	latitude: {
@@ -134,6 +125,16 @@ var playgroundScheme = new Schema({
 		required: true
 	}
 })
+
+playgroundScheme.index(
+	{
+		latitude: 1,
+		longitude: 1	
+	}, 
+	{
+		unique: true
+	}
+)
 
 var Playground = mongoose.model('Playground', playgroundScheme)
 

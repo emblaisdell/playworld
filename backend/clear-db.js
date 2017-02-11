@@ -12,8 +12,8 @@ User.remove({}, function() {
 	console.log('Removed all users')
 })
 
-Loot.remove({}, function() {
-	console.log('Removed all loots')
+Playground.remove({}, function() {
+	console.log('Removed all playgrounds')
 })
 
 mongoose.connection.close()

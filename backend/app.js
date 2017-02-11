@@ -118,7 +118,7 @@ app.post('/user/groups', function (req, res) {
 })
 
 app.post('/playgrounds', function(req, res) {
-	User.find({}, function(err, playgrounds) {
+	Playground.find({}, function(err, playgrounds) {
 		if (err) {
 			return res.status(400).send(err)
 		}
@@ -127,8 +127,8 @@ app.post('/playgrounds', function(req, res) {
 	})
 })
 
-app.post('/game/endgame', function(req, res) {
-	
+app.post('/game/end', function(req, res) {
+
 })
 
 /**
