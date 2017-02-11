@@ -11,6 +11,7 @@ app.use(parser.urlencoded({extended: true}))
 const User = mongoose.model('User')
 const Loot = mongoose.model('Loot')
 const Group = mongoose.model('Group')
+const Game = mongoose.model('Game')
 
 app.get('/', function (req, response) {
   response.send('Hello, world!')
