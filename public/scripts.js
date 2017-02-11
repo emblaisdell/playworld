@@ -40,3 +40,7 @@ function parseURLParams(url) {
 	}
 	return parms;
 }
+
+$(function(){
+	$("#titleName").text(getCookie("name"));
+})
