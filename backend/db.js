@@ -20,8 +20,18 @@ var userScheme = new Schema({
 		type: String,
 		required: true
 	},
+	loot: [String]
 })
 
 var User = mongoose.model('User', userScheme)
+
+var lootScheme = new Schema({
+	type: String,
+	text: String,
+	primColor: String,
+	secColor: String
+})
+
+var Loot = mongoose.model('Loot', lootScheme)
 
 module.exports = User
