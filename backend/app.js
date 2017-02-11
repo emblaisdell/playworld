@@ -8,7 +8,7 @@ path = require('path');
 
 const User = mongoose.model('User')
 const Loot = mongoose.model('Loot')
-const Group = mogoose.model('Group')
+const Group = mongoose.model('Group')
 
 app.get('/', function (req, response) {
   response.send('Hello, world!')
@@ -38,23 +38,27 @@ app.post('/register', function (req, response) {
 	})
 })
 
-app.post('/user/loot', function (req, response)) {
-  User.findOne({username: req.body.username}, 'loots', function(err, user){
+app.post('/user/loot', function (req, response) {
+  var username = req.body.username
+  User.findOne({username: username}, 'loots', function(err, user){
     if(err) {
-      res.send('Error fetching loot. ',400)
+      res.status(400).send('Error fetching loot for {0}'.format(username))
     }
-    res.send(user);
-  })
-}
 
-app.psot('/user/group', function(req, response)) {
-  User.findOne({username: req.doby.username}, 'group', function(err, user) {
-    if(err) {
-      res.send('Error finding group. ', 400)
-    }
-    res.send(user);
+    res.status(200).send(user);
   })
-}
+})
+
+app.post('/user/group', function(req, response) {
+  var username = req.body.username
+  User.findOne({username: username}, 'group', function(err, user) {
+    if(err) {
+      res.status(400).send('Error finding group for {0}'.format(username))
+    }
+
+    res.status(200).send(user);
+  })
+})
 
 app.listen(3000, function () {
   console.log('App listening on port', 3000)
