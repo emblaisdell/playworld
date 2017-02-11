@@ -90,7 +90,7 @@ var gameScheme = new Schema({
 	playground: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Playground'
-	}
+	},
 	players: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',
@@ -99,7 +99,7 @@ var gameScheme = new Schema({
 	winners: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
-	}]
+	}],
 	is_complete: {
 		type: Boolean,
 		required: true

@@ -5,6 +5,5 @@ var mongoose = require('mongoose')
 const User = mongoose.model('User')
 const Loot = mongoose.model('Loot')
 const Group = mongoose.model('Group')
-
-
-mongoose.connection.close()
+const Game = mongoose.model('Game')
+const Playground = mongoose.model('Playground')

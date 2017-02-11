@@ -4,6 +4,7 @@ var express = require('express')
 var mongoose = require('mongoose')
 var path = require('path')
 var parser = require('body-parser')
+var fs = require('fs')
 
 var app = express()
 app.use(parser.urlencoded({extended: true}))
@@ -126,7 +127,25 @@ app.post('/playgrounds', function(req, res) {
 	})
 })
 
-app.post('/')
+app.post('/game/endgame', function(req, res) {
+	
+})
+
+/**
+ * 
+ * @return {[type]}
+ */
+app.post('/game/actions', function(req, res) {
+	var filename = req.body.filename + '.json'
+	var file_path = path.join(__dirname, '/../games/', filename)
+	var game_desc = JSON.parse(fs.readFileSync(file_path, 'utf8'))
+	
+	if (game_desc) {
+		return res.status(200).send(game_desc)
+	} else {
+		return res.status(404).send('Not found')
+	}
+})
 
 app.listen(3000, function () {
   console.log('App listening on port', 3000)
