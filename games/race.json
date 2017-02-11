@@ -1,9 +1,29 @@
 [
 	{
-		type:"regroup",
-		groupBy:"team"
+		"type":"audio",
+		"who":"#start",
+		"data":"start.mp3"
 	},
 	{
-		
+		"type":"regroup",
+		"groupBy":"players"
+	},
+	{
+		"type":"waitFor",
+		"action":"rfid",
+		"at":"#start"
+	},
+	{
+		"type":"waitFor",
+		"action":"rfid",
+		"at":"#end"
+	},
+	{
+		"type":"win",
+		"first":"true"
+	},
+	{
+		"type":"regroup",
+		"groupBy":"team"
 	}
 ]

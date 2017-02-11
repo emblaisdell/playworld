@@ -6,8 +6,8 @@
 	],
 	"setup":{
 		"race":{
-			"#start":"12.34.56.78",
-			"#end":"12.34.56.78"
+			"#start":"localhost:3000",
+			"#end":"localhost:3000"
 		},
 		"spaceStory":{
 			"#cockpit":"12.34.56.78",

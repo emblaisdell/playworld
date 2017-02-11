@@ -3,9 +3,9 @@ images = {};
 
 // TODO: Get loot info from DB
 loot = [
-	{type:"trophy",text:"test",primColor:"0,0,255",secColor:"0,0,127"},
-	{type:"patch",text:"Winning",primColor:"0,0,255",secColor:"0,127,0"},
-	{type:"trophy",text:"You're Mom",primColor:"255,0,0",secColor:"255,127,0"}
+	{type:"trophy",text:"Great Job",primColor:"0,0,255",secColor:"0,0,127"},
+	{type:"patch",text:"Race Champ",primColor:"0,0,255",secColor:"0,127,0"},
+	{type:"trophy",text:"Awesome!",primColor:"255,0,0",secColor:"255,127,0"}
 ];
 
 $(window).on("load", function(){
